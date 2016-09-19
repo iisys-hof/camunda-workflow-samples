@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_cJpiYMMLEeSuY4-UFeK8lA" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="cmisCreateDeleteDocument" name="cmisCreateDeleteDocumentX" isExecutable="true">
+    <bpmn2:userTask id="UserTask_3" name="Verify">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_3" targetRef="DeleteDocument"/>
+    <bpmn2:serviceTask id="DeleteDocument" camunda:class="de.hofuniversity.iisys.camunda.workflows.cmis.DeleteDocumentDelegate" name="Delete Remote Document">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="DeleteDocument" targetRef="UserTask_2"/>
+    <bpmn2:serviceTask id="CreateDocument" camunda:class="de.hofuniversity.iisys.camunda.workflows.cmis.CreateDocumentDelegate" name="Create Remote Document">
+      <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="CreateDocument" targetRef="UserTask_3"/>
+    <bpmn2:userTask id="UserTask_2" camunda:assignee="demo" name="Verify Result">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="UserTask_2" targetRef="EndEvent_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="Finished">
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:startEvent id="StartEvent_1" name="Start">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="iisys:documentId" label="Document ID" type="string"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="StartEvent_1" targetRef="CreateDocument"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="cmisCreateDeleteDocument">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="72.0" y="289.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="34.0" x="73.0" y="330.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="UserTask_2">
+        <dc:Bounds height="80.0" width="100.0" x="600.0" y="264.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="740.0" y="283.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="55.0" x="731.0" y="324.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_4" bpmnElement="CreateDocument">
+        <dc:Bounds height="80.0" width="100.0" x="198.0" y="266.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_4" bpmnElement="UserTask_3">
+        <dc:Bounds height="80.0" width="100.0" x="336.0" y="264.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ServiceTask_4" targetElement="_BPMNShape_UserTask_4">
+        <di:waypoint xsi:type="dc:Point" x="298.0" y="306.0"/>
+        <di:waypoint xsi:type="dc:Point" x="317.0" y="306.0"/>
+        <di:waypoint xsi:type="dc:Point" x="317.0" y="304.0"/>
+        <di:waypoint xsi:type="dc:Point" x="336.0" y="304.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="321.0" y="303.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_5" bpmnElement="DeleteDocument">
+        <dc:Bounds height="80.0" width="100.0" x="462.0" y="264.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="_BPMNShape_UserTask_4" targetElement="_BPMNShape_ServiceTask_5">
+        <di:waypoint xsi:type="dc:Point" x="436.0" y="304.0"/>
+        <di:waypoint xsi:type="dc:Point" x="462.0" y="304.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="446.0" y="304.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_ServiceTask_5" targetElement="_BPMNShape_UserTask_3">
+        <di:waypoint xsi:type="dc:Point" x="562.0" y="304.0"/>
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="304.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="578.0" y="304.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_13" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_ServiceTask_4">
+        <di:waypoint xsi:type="dc:Point" x="108.0" y="307.0"/>
+        <di:waypoint xsi:type="dc:Point" x="129.0" y="307.0"/>
+        <di:waypoint xsi:type="dc:Point" x="129.0" y="306.0"/>
+        <di:waypoint xsi:type="dc:Point" x="198.0" y="306.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="162.0" y="306.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="_BPMNShape_UserTask_3" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="700.0" y="304.0"/>
+        <di:waypoint xsi:type="dc:Point" x="720.0" y="304.0"/>
+        <di:waypoint xsi:type="dc:Point" x="720.0" y="301.0"/>
+        <di:waypoint xsi:type="dc:Point" x="740.0" y="301.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="717.0" y="303.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
